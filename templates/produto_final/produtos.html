@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="col-lg-9">
+      <div class="row my-5 card-wrapper">
+        <table border="1">
+        {% if produtos %}
+        {% for produto in produtos %}
+            <tr><td>
+              <p class="card-text">
+                <a href="{{ url_for('produto_final_bp.produto_final', id_produto_final=produto.id) }}">
+                    {{ produto.id }} - {{ produto.produto }}
+                    {% if produto.tem_ficha %}
+                        - <span class="text-danger"><b>Ficha técnica ok </b></span>
+                    {% endif %}
+                </a><br>
+                Preço: {{ produto.preco_venda }}
+              </p>
+            </td></tr>
+        {% endfor %}
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

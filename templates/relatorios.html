@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% set active_page = 'relatorios' %}
+{% block content %}
+    <h1>{% block title %} RELATÓRIOS {% endblock %}</h1>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="my-4">
+                <a href="{{ url_for('reports_bp.lista_compras') }}">Lista de compras</a><br>
+                <a href="{{ url_for('reports_bp.lista_pedidos') }}">Lista de pedidos</a><br>
+                <a href="{{ url_for('reports_bp.lista_producao') }}">Lista de produção</a><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

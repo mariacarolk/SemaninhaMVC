@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% set active_page = 'lista_producao' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Lista de Produção{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Lista de Produção</h1><hr>
+    <form method="POST" action="{{ url_for('reports_bp.lista_producao') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.data_inicio.label }}
+        {{ form.data_inicio(class="form-control") }}
+        {{ field_error_messages(form.data_inicio) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_fim.label }}
+        {{ form.data_fim(class="form-control") }}
+        {{ field_error_messages(form.data_fim) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+{% endblock %}

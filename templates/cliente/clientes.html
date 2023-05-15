@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="col-lg-9">
+      <div class="row my-5 card-wrapper">
+        <table border="1">
+        {% if clientes %}
+        {% for cliente in clientes %}
+            <tr><td>
+              <p class="card-text">
+                <a href="{{ url_for('cliente_bp.cliente', id_cliente=cliente.id) }}">
+                    {{ cliente.id }} - {{ cliente.nome }}
+                </a>
+              </p>
+            </td></tr>
+        {% endfor %}
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

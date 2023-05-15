@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% set active_page = 'new_item' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Editar {{ mp.materia_prima }} - {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>
+      Editar Matéria Prima: {{ mp.materia_prima }}
+    </h1><hr>
+    <form method="POST" action="{{ url_for('materia_prima_bp.edit_materia_prima', id=mp.id) }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.fornecedor.label }}
+        {{ form.fornecedor(class="form-control") }}
+        {{ field_error_messages(form.fornecedor) }}
+      </div>
+      <div class="form-group">
+        {{ form.qtd_embalagem.label }}
+        {{ form.qtd_embalagem(class="form-control") }}
+        {{ field_error_messages(form.qtd_embalagem) }}
+      </div>
+      <div class="form-group">
+        {{ form.custo_embalagem.label }}
+        {{ form.custo_embalagem(class="form-control") }}
+        {{ field_error_messages(form.custo_embalagem) }}
+      </div>
+      <div class="form-group">
+        {{ form.indice_correcao.label }}
+        {{ form.indice_correcao(class="form-control") }}
+        {{ field_error_messages(form.indice_correcao) }}
+      </div>
+      <div class="form-group">
+        {{ form.fator_coccao.label }}
+        {{ form.fator_coccao(class="form-control") }}
+        {{ field_error_messages(form.fator_coccao) }}
+      </div>
+      <div class="form-group">
+        {{ form.custo_final.label }}
+        {{ form.custo_final(class="form-control") }}
+        {{ field_error_messages(form.custo_final) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for("static", filename="js/custo_final_mp.js") }}"></script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_pedido' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Novo pedido{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo pedido</h1><hr>
+    <form method="POST" action="{{ url_for('pedido_bp.novo_pedido') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.cliente.label }}
+        {{ form.cliente(class="form-control") }}
+        {{ field_error_messages(form.cliente) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_pedido.label }}
+        {{ form.data_pedido(class="form-control") }}
+        {{ field_error_messages(form.data_pedido) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_entrega.label }}
+        {{ form.data_entrega(class="form-control") }}
+        {{ field_error_messages(form.data_entrega) }}
+      </div>
+      <div class="form-group">
+        {{ form.valor.label }}
+        {{ form.valor(class="form-control", type="number") }}
+        {{ field_error_messages(form.valor) }}
+      </div>
+      <div class="form-group">
+        {{ form.status_pagamento.label }}
+        {{ form.status_pagamento(class="form-control") }}
+        {{ field_error_messages(form.status_pagamento) }}
+      </div>
+      <div class="form-group">
+        {{ form.status_entrega.label }}
+        {{ form.status_entrega(class="form-control") }}
+        {{ field_error_messages(form.status_entrega) }}
+      </div>
+      <div class="form-group">
+        {{ form.observacoes.label }}
+        {{ form.observacoes(class="form-control", rows="3") }}
+        {{ field_error_messages(form.observacoes) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<!-- <script src="{{ url_for('static', filename='js/subcategory.js') }}"> </script> -->
+
+{% endblock %}

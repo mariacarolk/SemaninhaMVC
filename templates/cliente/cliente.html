@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}{{ cliente.nome }} - {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-9">
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">{{ cliente.id }} - {{ cliente.nome }}</h3>
+        <p class="card-text"><b>Endereço: </b>{{ cliente.endereco | safe }} - {{ cliente.bairro | safe }} - {{ cliente.cidade }}</p>
+        <p class="card-text"><b>Telefone:</b> {{ cliente.telefone }}</p>
+        <p class="card-text"><b>Restrições:</b> {{ cliente.restricoes }}</p>
+        <p class="card-text"><b>Observações: </b>{{ cliente.observacoes }}</p><br>
+        <form class="delete-form" method="POST" action="{{ url_for('cliente_bp.delete_cliente', id_cliente=cliente.id) }}">
+          {{ deleteCliente.hidden_tag() }}
+          {{ deleteCliente.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+        </form>
+      </div>
+    </div>
+
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header">
+        Pedidos realizados
+      </div>
+      <div class="card-body">
+        <hr class="form-border">
+        {% if pedidos %}
+          {% for pedido in pedidos %}
+            <a href="{{ url_for('pedido_bp.pedido', id_pedido=pedido.id) }}">
+              <b>Pedido {{ pedido.id }}</b> - Data pedido: {{ pedido.data_pedido }} - {{ pedido.status_entrega }}
+            </a>
+            <form class="delete-form" method="POST" action="{{ url_for('pedido_bp.delete_pedido', id_pedido=pedido.id, id_cliente=cliente.id) }}">
+              {{ deletePedido.hidden_tag() }}
+              {{ deletePedido.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+            </form>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p>Cliente ainda não realizou pedidos.</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

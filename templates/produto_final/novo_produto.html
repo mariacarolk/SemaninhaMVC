@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_produto' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Novo produto - {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo produto</h1><hr>
+    <form method="POST" action="{{ url_for('produto_final_bp.novo_produto') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.produto_final.label }}
+        {{ form.produto_final(class="form-control") }}
+        {{ field_error_messages(form.produto_final) }}
+      </div>
+      <div class="form-group">
+        {{ form.tipo_produto.label }}
+        {{ form.tipo_produto(class="form-control") }}
+        {{ field_error_messages(form.tipo_produto) }}
+      </div>
+       <div class="form-group">
+        {{ form.unidade_medida.label }}
+        {{ form.unidade_medida(class="form-control") }}
+        {{ field_error_messages(form.unidade_medida) }}
+      </div>
+       <div class="form-group">
+        {{ form.qtd_produto.label }}
+        {{ form.qtd_produto(class="form-control", type="number") }}
+        {{ field_error_messages(form.qtd_produto) }}
+      </div>
+      <div class="form-group">
+        {{ form.preco_venda.label }}
+        {{ form.preco_venda(class="form-control", type="number") }}
+        {{ field_error_messages(form.preco_venda) }}
+      </div>
+      <div class="form-group">
+        {{ form.descricao.label }}
+        {{ form.descricao(class="form-control", rows="3") }}
+        {{ field_error_messages(form.descricao) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<!-- <script src="{{ url_for('static', filename='js/subcategory.js') }}"> </script> -->
+
+{% endblock %}

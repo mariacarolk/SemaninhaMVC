@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_pedido' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Novo pedido{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo cardápio</h1><hr>
+    <form method="POST" action="{{ url_for('cardapio_bp.novo_cardapio') }}" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.data_inicio.label }}
+        {{ form.data_inicio(class="form-control") }}
+        {{ field_error_messages(form.data_inicio) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_fim.label }}
+        {{ form.data_fim(class="form-control") }}
+        {{ field_error_messages(form.data_fim) }}
+      </div>
+
+      <table id="cardapio-table">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Imagem</th>
+                <th>Observações</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="produtos">
+            {% for row in form.produtos %}
+            <tr>
+                <td>
+                    {{ row.produto.label }}
+                    {{ row.produto(placeholder=row.produto.label.text, class="form-control", id='produtos-' + loop.index|string) }}
+                </td>
+                <td>
+                    {{ row.imagem.label }}
+                    {{ row.imagem(placeholder=row.imagem.label.text, class="form-control", id='imagem-' + loop.index|string) }}
+                </td>
+                <td>
+                    {{ row.observacoes.label }}
+                    {{ row.observacoes(placeholder=row.observacoes.label.text, class="form-control", id='observacoes-' + loop.index|string) }}
+                </td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+            {% endfor %}
+            {% set loop = {'index': 0} %}
+            <tr id="produtos-template" style="display: none;">
+                <td>
+                    {{ form.produtos.entries[0].produto.label }}
+                    {{ form.produtos.entries[0].produto(placeholder=form.produtos.entries[0].produto.label.text, class="form-control", id='produtos-' + loop.index|string) }}
+                </td>
+                <td>
+                    {{ form.produtos.entries[0].imagem.label }}
+                    {{ form.produtos.entries[0].imagem(placeholder=form.produtos.entries[0].imagem.label.text, class="form-control", id='imagem-' + loop.index|string) }}
+                </td>
+                <td>
+                    {{ form.produtos.entries[0].observacoes.label }}
+                    {{ form.produtos.entries[0].observacoes(placeholder=form.produtos.entries[0].observacoes.label.text, class="form-control", id='observacoes-' + loop.index|string) }}
+                </td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <button type="button" class="btn btn-primary" onclick="addRow()">Add Product</button>
+    <br><br>
+    {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Cardápios</h1><br>
+    {% if cardapios %}
+      {% for row in cardapios %}
+         <p class="card-text">
+             <a href="{{ url_for('cardapio_bp.cardapio', id=row.id) }}">
+                {{ row.id }} - Data início: {{ row.data_inicio }} Data fim: {{ row.data_fim }}
+             </a>
+         </p>
+        <form class="delete-form" method="POST" action="{{ url_for('cardapio_bp.delete_cardapio', id=row.id) }}">
+          {{ deleteCardapio.hidden_tag() }}
+          {{ deleteCardapio.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+        </form>
+         <br>
+      {% endfor %}
+    {% else %}
+      <p>Não há nenhum cardápio cadastrado.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/addproduto.js') }}"> </script>
+
+{% endblock %}

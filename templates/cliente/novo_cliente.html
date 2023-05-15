@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_cliente' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Novo cliente - {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo cliente</h1><hr>
+    <form method="POST" action="{{ url_for('cliente_bp.novo_cliente') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.nome.label }}
+        {{ form.nome(class="form-control") }}
+        {{ field_error_messages(form.nome) }}
+        {{ field_error_messages(form.nome) }}
+        <!-- Add a help icon here -->
+        <a href="#" class="help-icon" data-toggle="modal" data-target="#helpModalNome">
+          <i class="fas fa-question-circle"></i>
+        </a>
+      </div>
+      <div class="form-group">
+        {{ form.endereco.label }}
+        {{ form.endereco(class="form-control") }}
+        {{ field_error_messages(form.endereco) }}
+      </div>
+      <div class="form-group">
+        {{ form.bairro.label }}
+        {{ form.bairro(class="form-control") }}
+        {{ field_error_messages(form.bairro) }}
+      </div>
+      <div class="form-group">
+        {{ form.cidade.label }}
+        {{ form.cidade(class="form-control") }}
+        {{ field_error_messages(form.cidade) }}
+      </div>
+      <div class="form-group">
+        {{ form.telefone.label }}
+        {{ form.telefone(class="form-control") }}
+        {{ field_error_messages(form.telefone) }}
+      </div>
+      <div class="form-group">
+        {{ form.restricoes.label }}
+        {{ form.restricoes(class="form-control", rows="3") }}
+        {{ field_error_messages(form.restricoes) }}
+      </div>
+      <div class="form-group">
+        {{ form.observacoes.label }}
+        {{ form.observacoes(class="form-control", rows="3") }}
+        {{ field_error_messages(form.observacoes) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for("static", filename="js/help.js") }}"></script>
+{% endblock %}
+
+<script>
+// Add an event listener to the help icon for Nome field
+document.querySelector('#helpModalNome').addEventListener('click', function() {
+  // Show the modal popup for Nome field
+  $('#helpModalNome').modal('show');
+});
+</script>

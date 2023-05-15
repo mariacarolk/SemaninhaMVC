@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% set active_page = 'consultas' %}
+{% block content %}
+    <h1>{% block title %} CONSULTAS {% endblock %}</h1>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="my-4">
+                <a href="{{ url_for('produto_final_bp.produtos') }}">Produtos finais</a><br>
+                <a href="{{ url_for('materia_prima_bp.materias_primas') }}">Matérias Primas</a><br>
+                <a href="{{ url_for('preparo_bp.preparos') }}">Preparos</a></><br>
+                <a href="{{ url_for('cliente_bp.clientes') }}">Clientes</a><br>
+                <a href="{{ url_for('pedido_bp.pedidos') }}">Pedidos</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

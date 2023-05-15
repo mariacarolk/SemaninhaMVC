@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="col-lg-9">
+      <div class="row my-5 card-wrapper">
+        <table border="1">
+        {% if materias_primas %}
+        {% for mp in materias_primas %}
+            <tr><td>
+              <p class="card-text">
+                <a href="{{ url_for('materia_prima_bp.materia_prima', id=mp.id) }}">{{ mp.materia_prima }}</a>
+              </p>
+            </td></tr>
+        {% endfor %}
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

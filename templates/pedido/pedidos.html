@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="col-lg-20">
+      <div class="row my-5 card-wrapper">
+        <table border="1">
+        {% if pedidos %}
+        {% for pedido in pedidos %}
+            <tr><td>
+              <p class="card-text">
+                <a href="{{ url_for('pedido_bp.pedido', id_pedido=pedido.id) }}">
+                  <b>Pedido {{ pedido.id }}</b>
+                </a>
+                <br>
+                <b>Cliente:</b> {{ pedido.cliente }} -
+                <b>Data pedido:</b> {{ pedido.data_pedido }} -
+                <b>Data entrega:</b> {{ pedido.data_entrega }} -
+                <b>Valor:</b> R$ {{ pedido.valor }} -
+                <b>Pagamento:</b> {{ pedido.status_pagamento }} -
+                <b>Entrega:</b> {{ pedido.status_entrega }}
+              </p>
+            </td></tr>
+        {% endfor %}
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

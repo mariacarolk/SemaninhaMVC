@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}{{ cardapio.id }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-9">
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">Cardápio {{ cardapio.id }}</h3>
+        <p class="card-text"><b>Data início: </b>{{ cardapio.data_inicio }}</p>
+        <p class="card-text"><b>Data fim: </b>{{ cardapio.data_fim }}</p><br><br>
+        <form class="delete-form" method="POST" action="{{ url_for('cardapio_bp.delete_cardapio', id=cardapio.id) }}">
+          {{ deleteCardapio.hidden_tag() }}
+          {{ deleteCardapio.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+        </form>
+      </div>
+      <div class="card-body">
+        <hr class="form-border">
+        {% if produtos %}
+          {% for produto in produtos %}
+            <b>{{ produto.produto }}</b> - {{ produto.observacoes }}
+            <form class="delete-form" method="POST" action="{{ url_for('cardapio_bp.delete_cardapio_produto',
+                                                                        id_cardapio=cardapio.id,
+                                                                        id_produto=produto.id_produto) }}">
+              {{ deleteCardapioProduto.hidden_tag() }}
+              {{ deleteCardapioProduto.submit(class="btn btn-danger",
+                                              onclick="return confirm('Are you sure you want to delete this item?');") }}
+            </form>
+            <br>
+          {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

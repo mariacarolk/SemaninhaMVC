@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% set active_page = 'nova_materia_prima' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Nova matéria prima {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo produto</h1><hr>
+    <form method="POST" action="{{ url_for('materia_prima_bp.nova_materia_prima') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.materia_prima.label }}
+        {{ form.materia_prima(class="form-control") }}
+        {{ field_error_messages(form.materia_prima) }}
+      </div>
+       <div class="form-group">
+        {{ form.categoria.label }}
+        {{ form.categoria(class="form-control") }}
+        {{ field_error_messages(form.categoria) }}
+      </div>
+      <div class="form-group">
+        {{ form.fornecedor.label }}
+        {{ form.fornecedor(class="form-control") }}
+        {{ field_error_messages(form.fornecedor) }}
+      </div>
+      <div class="form-group">
+        {{ form.unidade_medida.label }}
+        {{ form.unidade_medida(class="form-control") }}
+        {{ field_error_messages(form.unidade_medida) }}
+      </div>
+      <div class="form-group">
+        {{ form.qtd_embalagem.label }}
+        {{ form.qtd_embalagem(class="form-control") }}
+        {{ field_error_messages(form.qtd_embalagem) }}
+      </div>
+      <div class="form-group">
+        {{ form.custo_embalagem.label }}
+        {{ form.custo_embalagem(class="form-control") }}
+        {{ field_error_messages(form.custo_embalagem) }}
+      </div>
+      <div class="form-group">
+        {{ form.indice_correcao.label }}
+        {{ form.indice_correcao(class="form-control") }}
+        {{ field_error_messages(form.indice_correcao) }}
+      </div>
+      <div class="form-group">
+        {{ form.fator_coccao.label }}
+        {{ form.fator_coccao(class="form-control") }}
+        {{ field_error_messages(form.fator_coccao) }}
+      </div>
+      <div class="form-group">
+        {{ form.custo_final.label }}
+        {{ form.custo_final(class="form-control") }}
+        {{ field_error_messages(form.custo_final) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ url_for("static", filename="js/custo_final_mp.js") }}"></script>
+{% endblock %}
+

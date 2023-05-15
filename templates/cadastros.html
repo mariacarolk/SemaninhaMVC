@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% set active_page = 'index' %}
+{% block content %}
+    <h1>{% block title %} CADASTROS {% endblock %}</h1>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="my-4">
+                <a href="{{ url_for('materia_prima_bp.nova_materia_prima') }}">Matéria prima</a><br>
+                <a href="{{ url_for('produto_final_bp.novo_produto') }}">Produto final</a><br>
+                <a href="{{ url_for('preparo_bp.novo_preparo') }}">Preparo</a><br>
+                <a href="{{ url_for('cliente_bp.novo_cliente') }}">Cliente</a><br>
+                <a href="{{ url_for('pedido_bp.novo_pedido') }}">Pedido</a><br>
+                <a href="{{ url_for('cardapio_bp.novo_cardapio') }}">Cardápio</a><br>
+                <a href="{{ url_for('general_bp.nova_unid_med') }}">Unidade de medida</a><br>
+                <a href="{{ url_for('general_bp.novo_status') }}">Status (pagamento ou entrega)</a><br>
+                <a href="{{ url_for('general_bp.novo_tipo_produto') }}">Tipo Produto</a><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

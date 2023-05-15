@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="col-lg-9">
+      <div class="row my-5 card-wrapper">
+        <table border="1">
+        {% if preparos %}
+        {% for preparo in preparos %}
+            <tr><td>
+              <p class="card-text">
+                <a href="{{ url_for('preparo_bp.preparo', id_preparo=preparo.id) }}">{{ preparo.preparo }}</a>
+                {% if preparo.tem_ficha %}
+                  - <span class="text-danger"><b>Ficha técnica ok </b></span>
+                {% endif %}
+              </p>
+            </td></tr>
+        {% endfor %}
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

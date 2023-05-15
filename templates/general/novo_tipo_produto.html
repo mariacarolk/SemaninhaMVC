@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_tipo_produto' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Tipos de produto{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo Tipo de Produto</h1><hr>
+    <form method="POST" action="{{ url_for('general_bp.novo_tipo_produto') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.tipo_produto.label }}
+        {{ form.tipo_produto(class="form-control") }}
+        {{ field_error_messages(form.tipo_produto) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Tipos de Produto</h1><br>
+    {% if tipos_produto %}
+      {% for tipo in tipos_produto %}
+         <p class="card-text">
+           {{ tipo.id }} - {{ tipo.tipo_produto }}
+         </p>
+        <form class="delete-form" method="POST" action="{{ url_for('general_bp.delete_tipo_produto', id=tipo.id) }}">
+          {{ deleteTipoProduto.hidden_tag() }}
+          {{ deleteTipoProduto.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+        </form>
+         <br>
+      {% endfor %}
+    {% else %}
+      <p>Não há nenhum tipo de produto cadastrado.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+{% endblock %}

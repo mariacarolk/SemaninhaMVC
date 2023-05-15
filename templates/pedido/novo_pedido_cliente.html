@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% set active_page = 'novo_pedido' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Novo pedido{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Novo pedido - Cliente</h1><hr>
+    <form method="POST" action="{{ url_for('pedido_bp.novo_pedido_cliente') }}" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.nome_cliente.label }}
+        {{ form.nome_cliente(class="form-control") }}
+        {{ field_error_messages(form.nome_cliente) }}
+      </div>
+      <div class="form-group">
+        {{ form.endereco.label }}
+        {{ form.endereco(class="form-control") }}
+        {{ field_error_messages(form.endereco) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_entrega.label }}
+        {{ form.data_entrega(class="form-control") }}
+        {{ field_error_messages(form.data_entrega) }}
+      </div>
+      <div class="form-group">
+        {{ form.forma_pagamento.label }}
+        {{ form.forma_pagamento(class="form-control") }}
+        {{ field_error_messages(form.forma_pagamento) }}
+      </div>
+      <div class="form-group">
+        {{ form.observacoes.label }}
+        {{ form.observacoes(class="form-control") }}
+        {{ field_error_messages(form.observacoes) }}
+      </div>
+      <br>
+      {% for produto in produtos %}
+          <div class="form-group form-check">
+              <input class="form-check-input" type="checkbox" value="{{ produto.id }}" name="produtos[]">
+              <label class="form-check-label mr-2">
+                  {{ produto.produto }} - R${{ produto.preco_venda }} - {{ produto.descricao }}
+              </label>
+              <input type="number" name="quantidades[]" value="1" min="1" max="10" class="form-control" style="width: 60px;">
+          </div>
+      {% endfor %}
+    <hr>
+    {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
+{% block javascript %}
+{% endblock %}

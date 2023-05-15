@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% set active_page = 'lista_compras' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}Lista de compras{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Lista de compras</h1><hr>
+    <form method="POST" action="{{ url_for('reports_bp.lista_compras') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      {{ error_messages(form.errors) }}
+      <div class="form-group">
+        {{ form.data_inicio.label }}
+        {{ form.data_inicio(class="form-control") }}
+        {{ field_error_messages(form.data_inicio) }}
+      </div>
+      <div class="form-group">
+        {{ form.data_fim.label }}
+        {{ form.data_fim(class="form-control") }}
+        {{ field_error_messages(form.data_fim) }}
+      </div>
+      <hr>
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+</div>
+<div class="card-body">
+  <hr class="form-border">
+  {% if lista_compras %}
+    {% set ns = namespace(fornecedor_ativo='') %}
+  <h1>Custo total da compra: R$ <span class="text-danger">{{ custo_total_compra }} </span></h1><br><br>
+    {% for item in lista_compras %}
+
+      {% if item.fornecedor != ns.fornecedor_ativo %}
+        <br><b>Fornecedor {{ item.fornecedor }}</b><br>
+      {% endif %}
+
+      {% set ns.fornecedor_ativo = item.fornecedor %}
+
+      {{ item.materia_prima }} - {{ item.qtd_materia_prima }} {{ item.unidade_medida }} - R$ {{ item.custo_materia_prima }}
+      <br>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

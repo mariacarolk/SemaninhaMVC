@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% from "_error_messages.html" import field_error_messages, error_messages %}
+{% block title %}{{ produto.produto }} - {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-9">
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">{{ produto.produto }}</h3>
+        <p class="card-text"><b>Qtd. produto: </b>{{ produto.qtd_produto | safe }} {{ produto.unidade_medida | safe }}</p>
+        <p class="card-text"><b>Custo:</b> {{ "$%.2f" | format(produto.custo_produto) }}</p>
+        <p class="card-text"><b>Preço de venda:</b> {{ "$%.2f" | format(produto.preco_venda) }}</p>
+        <p class="card-text"><b>Descrição: </b>{{ produto.descricao }}</p><br>
+        <a href="{{ url_for('produto_final_bp.produto_embalagem', id_produto=produto.id) }}">
+          <p class="card-text"><b>Insira aqui as embalagens do produto</b></p><br><br>
+        </a>
+        <form class="delete-form" method="POST" action="{{ url_for('produto_final_bp.delete_produto_final', id_produto=produto.id) }}">
+          {{ deleteProdutoFinal.hidden_tag() }}
+          {{ deleteProdutoFinal.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+        </form>
+      </div>
+    </div>
+
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header">
+        Composição do produto
+      </div>
+      <div class="card-body">
+        <hr class="form-border">
+        {% if produto_preparo %}
+          {% for item in produto_preparo %}
+            <b>{{ item.preparo }}</b> - {{ item.qtd_preparo }} {{ item.unidade_medida }} R$ {{item.custo_preparo }}
+            <form class="delete-form" method="POST" action="{{ url_for('produto_final_bp.delete_produto_preparo', id_produto=produto.id, id_preparo=item.id_preparo) }}">
+              {{ deletePreparo.hidden_tag() }}
+              {{ deletePreparo.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete this item?');") }}
+            </form>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p class="placeholder-materia_prima"><b>Insira aqui a os preparos que compõem o produto.</b></p>
+        {% endif %}
+        <hr>
+        <form class="produto_form" action="{{ url_for('produto_final_bp.new_produto_preparo') }}" method="POST">
+          {{ produtoPreparoForm.hidden_tag() }}
+          {{ error_messages(produtoPreparoForm.errors) }}
+          <div class="form-group">
+            {{ produtoPreparoForm.preparo.label }}
+            {{ produtoPreparoForm.preparo(class="form-control") }}
+            {{ field_error_messages(produtoPreparoForm.preparo) }}
+          </div>
+          <div class="form-group">
+            {{ produtoPreparoForm.unidade_medida.label }}
+            {{ produtoPreparoForm.unidade_medida(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ produtoPreparoForm.qtd_preparo.label }}
+            {{ produtoPreparoForm.qtd_preparo(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ produtoPreparoForm.medida_caseira.label }}
+            {{ produtoPreparoForm.medida_caseira(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ produtoPreparoForm.custo_preparo.label }}
+            {{ produtoPreparoForm.custo_preparo(class="form-control", type="number") }}
+          </div>
+          {{ produtoPreparoForm.submit(class="btn btn-primary") }}
+          <span class="produtopreparo-error"></span>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for("static", filename="js/unid_med_prod.js") }}"></script>
+<script src="{{ url_for("static", filename="js/custo_preparo.js") }}"></script>
+{% endblock %}
